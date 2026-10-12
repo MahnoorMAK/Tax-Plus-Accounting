@@ -1,6 +1,6 @@
 /**
  * Hero Interactions
- * - 3D mouse parallax (background + content + nav)
+ * - 3D mouse parallax (background + content)
  * - Self-settling: stops animating once motion has decayed
  * - Respects prefers-reduced-motion
  * - Uses requestAnimationFrame only while motion is active
@@ -23,12 +23,11 @@
 
     var bgLayer      = hero.querySelector('[data-parallax]');
     var contentLayer = hero.querySelector('[data-parallax-layer="0.05"]');
-    var navLayer     = hero.querySelector('[data-parallax-layer="0.02"]');
     var scrollLayer  = hero.querySelector('[data-parallax-layer="0.08"]');
 
     // -------- Tuning --------
-    var INTENSITY = 14;      // max px the background shifts (was 20, lowered for calmness)
-    var EASE      = 0.12;    // lerp speed (higher = snappier, less drift feel)
+    var INTENSITY = 14;      // max px the background shifts
+    var EASE      = 0.12;    // lerp speed
     var SETTLE    = 0.05;    // if delta is below this (in px), snap to target & stop RAF
 
     var targetX = 0, targetY = 0;
@@ -50,11 +49,6 @@
                 'translate3d(' + (-x * 0.35).toFixed(2) + 'px,' +
                               (-y * 0.35).toFixed(2) + 'px,0)';
         }
-        if (navLayer) {
-            navLayer.style.transform =
-                'translate3d(calc(-50% + ' + (-x * 0.15).toFixed(2) + 'px),' +
-                              (-y * 0.15).toFixed(2) + 'px,0)';
-        }
         if (scrollLayer) {
             scrollLayer.style.transform =
                 'translate3d(calc(-50% + ' + (x * 0.5).toFixed(2) + 'px),' +
@@ -69,7 +63,7 @@
         currentX += dx * EASE;
         currentY += dy * EASE;
 
-        // Snap when close enough — this is what kills the endless drift
+        // Snap when close enough — stops the endless drift
         if (Math.abs(dx) < SETTLE && Math.abs(dy) < SETTLE) {
             currentX = targetX;
             currentY = targetY;
@@ -77,7 +71,7 @@
 
             running = false;
             rafId = null;
-            return; // stop the RAF loop until the next mousemove
+            return;
         }
 
         applyTransforms();
