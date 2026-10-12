@@ -23,28 +23,6 @@
         <div class="hero__bg-glow"></div>
     </div>
 
-    {{-- Floating Glass Nav --}}
-    <nav class="hero__nav glass" data-parallax-layer="0.02">
-        <div class="hero__nav-inner">
-            <a href="{{ url('/') }}" class="hero__logo">
-                <span class="hero__logo-mark"></span>
-                <span class="hero__logo-text">
-                    <strong>TAX PLUS</strong>
-                    <small>We think beyond the numbers</small>
-                </span>
-            </a>
-            <ul class="hero__nav-links">
-                <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/services') }}">Services</a></li>
-                <li><a href="{{ url('/about') }}">About Us</a></li>
-                <li><a href="{{ url('/faqs') }}">FAQs</a></li>
-                <li><a href="{{ url('/blog') }}">Blog</a></li>
-                <li><a href="{{ url('/contact') }}">Contact Us</a></li>
-            </ul>
-            <a href="{{ url('/contact') }}" class="hero__nav-cta">Get In Touch</a>
-        </div>
-    </nav>
-
     {{-- Main Hero Content --}}
     <div class="hero__content" data-parallax-layer="0.05">
         <div class="hero__eyebrow glass-chip">
@@ -93,9 +71,6 @@
     </div>
 
     {{-- Scroll Cue --}}
-    <div class="hero__scroll" data-parallax-layer="0.08">
-        <span></span>
-    </div>
 </section>
 
 {{-- ===== JS (injected once per page, deferred) ===== --}}
