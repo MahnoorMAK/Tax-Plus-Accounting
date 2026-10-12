@@ -1,0 +1,432 @@
+/* ============================================
+   AUDIT DEFENSE — Ambient Focus
+   Cinematic text over full-bleed image
+   ============================================ */
+
+.audit {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 6vw;
+    background: #0A1628;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #fff;
+}
+
+.audit, .audit *, .audit *::before, .audit *::after {
+    box-sizing: border-box;
+}
+
+/* ---------- FULL IMAGE BACKGROUND ---------- */
+.audit__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.audit__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transform: scale(1.06);
+    filter: saturate(0.85) contrast(1.02);
+    will-change: transform;
+}
+
+/* Subtle cool tint so text pops */
+.audit__bg-tint {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(10, 22, 40, 0.35) 0%,
+        rgba(10, 22, 40, 0.45) 50%,
+        rgba(10, 22, 40, 0.55) 100%
+    );
+}
+
+/* Heavy vignette — darkens edges, keeps center clear */
+.audit__bg-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 80% 70% at 50% 50%,
+        transparent 0%,
+        transparent 30%,
+        rgba(10, 22, 40, 0.4) 65%,
+        rgba(10, 22, 40, 0.85) 100%
+    );
+    pointer-events: none;
+}
+
+/* ---------- CONTENT CONTAINER ---------- */
+.audit__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ambient spotlight behind text */
+.audit__spotlight {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 700px;
+    max-width: 120%;
+    max-height: 120%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(10, 22, 40, 0.75) 0%,
+        rgba(10, 22, 40, 0.55) 40%,
+        rgba(10, 22, 40, 0.2) 65%,
+        transparent 85%
+    );
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: -1;
+    animation: auditSpotPulse 8s ease-in-out infinite;
+}
+
+@keyframes auditSpotPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+    50%      { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+}
+
+/* ---------- CONTENT ---------- */
+.audit__content {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ---------- EYEBROW ---------- */
+.audit__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #FBBF24;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 26px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(10, 22, 40, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.audit__eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #FBBF24;
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.9);
+    animation: auditDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes auditDotPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* ---------- TITLE — Big, cinematic ---------- */
+.audit__title {
+    font-size: clamp(34px, 5vw, 68px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0 0 28px;
+    text-shadow:
+        0 2px 20px rgba(0, 0, 0, 0.6),
+        0 4px 40px rgba(0, 0, 0, 0.4);
+    max-width: 780px;
+}
+
+.audit__title-block {
+    display: block;
+    margin-top: 6px;
+    background: linear-gradient(120deg, #93C5FD 0%, #60A5FA 40%, #3B82F6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 24px rgba(59, 130, 246, 0.45));
+}
+
+/* ---------- DIVIDER ---------- */
+.audit__divider {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #FBBF24 30%,
+        #FBBF24 70%,
+        transparent 100%
+    );
+    border-radius: 2px;
+    margin-bottom: 32px;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+}
+
+/* ---------- BODY TEXT ---------- */
+.audit__text {
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 620px;
+    margin: 0 0 40px;
+    font-weight: 400;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- CTA ROW ---------- */
+.audit__cta-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 36px;
+}
+
+.audit__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1E40AF, #1D4ED8);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.35s ease;
+    box-shadow:
+        0 0 10px rgba(59, 130, 246, 0.6),
+        0 0 24px rgba(59, 130, 246, 0.4),
+        0 12px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    isolation: isolate;
+}
+
+.audit__cta:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 14px #3B82F6,
+        0 0 30px #3B82F6,
+        0 0 60px #3B82F6,
+        0 0 100px rgba(59, 130, 246, 0.5),
+        0 16px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.audit__cta-label {
+    position: relative;
+    z-index: 3;
+}
+
+.audit__cta-flash {
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+        100deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 70%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    pointer-events: none;
+    z-index: 2;
+    animation: auditFlash 3s ease-in-out infinite;
+}
+
+@keyframes auditFlash {
+    0%        { left: -120%; }
+    55%, 100% { left: 140%; }
+}
+
+.audit__cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 26px;
+    border-radius: 10px;
+    background: rgba(10, 22, 40, 0.4);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.audit__cta-ghost:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.7);
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 16px rgba(59, 130, 246, 0.7),
+        0 0 32px rgba(59, 130, 246, 0.45),
+        0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.audit__cta-ghost svg {
+    transition: transform 0.2s ease;
+}
+
+.audit__cta-ghost:hover svg {
+    transform: translateX(3px);
+}
+
+/* ---------- CONTACT STRIP ---------- */
+.audit__contacts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background: rgba(10, 22, 40, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.audit__contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.audit__contact:hover {
+    color: #FBBF24;
+}
+
+.audit__contact svg {
+    flex-shrink: 0;
+    opacity: 0.8;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.audit__contact:hover svg {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.audit__contact-divider {
+    color: rgba(255, 255, 255, 0.25);
+    font-weight: 300;
+    user-select: none;
+}
+
+/* ---------- REVEAL ANIMATIONS ---------- */
+[data-audit-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+[data-audit-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.audit__eyebrow[data-audit-reveal] { transition-delay: 0.05s; }
+.audit__title[data-audit-reveal]   { transition-delay: 0.15s; }
+.audit__divider[data-audit-reveal] { transition-delay: 0.35s; }
+.audit__text[data-audit-reveal]    { transition-delay: 0.45s; }
+.audit__cta-row[data-audit-reveal] { transition-delay: 0.6s; }
+.audit__contacts[data-audit-reveal]{ transition-delay: 0.75s; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .audit {
+        padding: 100px 20px;
+        min-height: 100svh;
+    }
+
+    .audit__title {
+        font-size: clamp(28px, 8vw, 44px);
+    }
+
+    .audit__text {
+        font-size: 15px;
+    }
+
+    .audit__cta-row {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .audit__cta,
+    .audit__cta-ghost {
+        justify-content: center;
+    }
+
+    .audit__contacts {
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px 20px;
+        border-radius: 16px;
+    }
+
+    .audit__contact-divider {
+        display: none;
+    }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .audit__eyebrow-dot,
+    .audit__cta-flash,
+    .audit__spotlight {
+        animation: none !important;
+    }
+
+    [data-audit-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
