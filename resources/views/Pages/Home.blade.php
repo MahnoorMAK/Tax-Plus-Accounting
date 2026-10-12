@@ -4,5 +4,8 @@
 
 @section('content')
     @include('Component.hero')
-    {{-- other sections can go here --}}
+    @include('Component.tax-benefits')
+    @include('Component.audit-defense')
+    @include('Component.testimonials')
+    @include('Component.franchise-inquiry')
 @endsection
